@@ -507,15 +507,9 @@ namespace Ch10_01DeferredRendering
             // Initialize the world matrix
             var worldMatrix = Matrix.Identity;
 
-            // Set the camera position slightly behind (z)
-            var cameraPosition = new Vector3(15, 15, -1);
-            var cameraTarget = new Vector3(-15, 5, -1); // Looking at the origin 0,0,0
-            var cameraUp = Vector3.UnitY; // Y+ is Up
+            var camera = new FpsCamera();
+            camera.LookAt(new Vector3(15, 5, -1), new Vector3(-15, 5, -1), Vector3.UnitY);
 
-            // Prepare matrices
-            // Create the view matrix from our camera position, look target and up direction
-            var viewMatrix = Matrix.LookAtRH(cameraPosition, cameraTarget, cameraUp);
-            viewMatrix.TranslationVector += new Vector3(0, -0.98f, 0);
 
             // Create the projection matrix
             /* FoV 60degrees = Pi/3 radians */
@@ -585,22 +579,22 @@ namespace Ch10_01DeferredRendering
                         break;
                     // WASD -> pans view
                     case Keys.A:
-                        viewMatrix.TranslationVector += new Vector3(moveFactor * 12, 0f, 0f);
+                        camera.Strafe(-moveFactor * 12);
                         break;
                     case Keys.D:
-                        viewMatrix.TranslationVector -= new Vector3(moveFactor * 12, 0f, 0f);
+                        camera.Strafe(moveFactor * 12);
                         break;
                     case Keys.S:
                         if (shiftKey)
-                            viewMatrix.TranslationVector += new Vector3(0f, moveFactor * 12, 0f);
+                            camera.Walk(moveFactor * 12);
                         else
-                            viewMatrix.TranslationVector -= new Vector3(0f, 0f, 1) * moveFactor * 12;
+                            camera.Walk(-moveFactor * 12);
                         break;
                     case Keys.W:
                         if (shiftKey)
-                            viewMatrix.TranslationVector -= new Vector3(0f, moveFactor * 12, 0f);
+                            camera.Walk(moveFactor * 12);
                         else
-                            viewMatrix.TranslationVector += new Vector3(0f, 0f, 1) * moveFactor * 12;
+                            camera.Walk(-moveFactor * 12);
                         break;
                     // Up/Down and Left/Right - rotates around X / Y respectively
                     // (Mouse wheel rotates around Z)
@@ -729,12 +723,11 @@ namespace Ch10_01DeferredRendering
                 if (shiftKey)
                 {
                     // Zoom in/out
-                    viewMatrix.TranslationVector += new Vector3(0f, 0f, (e.Delta / 120f) * moveFactor * 2);
+                    camera.Zoom((e.Delta / 120f) * moveFactor * 2);
                 }
                 else
                 {
                     // rotate around Z-axis
-                    viewMatrix *= Matrix.RotationZ((e.Delta / 120f) * moveFactor);
                     rotation += new Vector3(0f, 0f, (e.Delta / 120f) * moveFactor);
                 }
                 updateText();
@@ -756,14 +749,17 @@ namespace Ch10_01DeferredRendering
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    var yRotate = lastX - e.X;
-                    var xRotate = lastY - e.Y;
+                    var xRotate = lastX - e.X;
+                    var yRotate = lastY - e.Y;
                     lastY = e.Y;
                     lastX = e.X;
 
                     // Mouse move changes 
-                    viewMatrix *= Matrix.RotationX(-xRotate * moveFactor);
-                    viewMatrix *= Matrix.RotationY(-yRotate * moveFactor);
+                    var dx = MathF.ToRadians(xRotate * moveFactor * 10.0f);
+                    var dy = MathF.ToRadians(yRotate * moveFactor * 10.0f);
+
+                    camera.Pitch(dy);
+                    camera.Yaw(dx);
 
                     updateText();
                 }
@@ -792,14 +788,16 @@ namespace Ch10_01DeferredRendering
                 // Clear render target view
                 context.ClearRenderTargetView(RenderTargetView, background);
 
+                camera.UpdateViewMatrix();
+                var viewMatrix = camera.View;
+
                 // Create viewProjection matrix
                 var viewProjection = Matrix.Multiply(viewMatrix, projectionMatrix);
 
                 var boundingFrustum = new BoundingFrustum(viewProjection);
 
                 // Extract camera position from view
-                var camPosition = Matrix.Transpose(Matrix.Invert(viewMatrix)).Column4;
-                cameraPosition = new Vector3(camPosition.X, camPosition.Y, camPosition.Z);
+                var cameraPosition = camera.Position;
 
                 // If Keys.CtrlKey is down, auto rotate viewProjection based on time
                 var time = clock.ElapsedMilliseconds / 1000.0f;

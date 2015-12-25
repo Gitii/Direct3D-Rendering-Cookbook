@@ -11,6 +11,7 @@ using SharpDX.Direct3D11;
 using SharpDX.D3DCompiler;
 
 using Common;
+using SharpDX.ComObjects;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:
@@ -69,7 +70,7 @@ namespace Ch07_01ImageProcessing
             if (this.DeviceManager != null)
             {
                 var device = this.DeviceManager.Direct3DDevice;
-                sourceTextureSRV = ShaderResourceView.FromFile(device, sourceImageFile);
+                sourceTextureSRV = TextureLoader.FromFile(device, sourceImageFile);
                 //using (var tmpTex = sourceTextureSRV.ResourceAs<Texture2D>())
                 //{
                 //    if (tmpTex.Description.Format != Format.R8G8B8A8_UNorm)

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SharpDX;
+using SharpDX.ComObjects;
 using SharpDX.Direct3D11;
 
 // Resolve class name conflicts by explicitly stating
@@ -55,7 +56,7 @@ namespace Ch05_02TessellatedMesh
             triangleBinding = new VertexBufferBinding(triangleVertices, Utilities.SizeOf<Vertex>(), 0);
 
             // Load texture
-            textureView = ToDispose(ShaderResourceView.FromFile(device, "Texture2.png"));
+            textureView = ToDispose(TextureLoader.FromFile(device, "Texture2.png"));
 
             // Create our sampler state
             samplerState = ToDispose(new SamplerState(device, new SamplerStateDescription()

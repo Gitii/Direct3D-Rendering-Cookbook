@@ -10,6 +10,7 @@ using SharpDX.DXGI;
 using SharpDX.Direct3D11;
 
 using Common;
+using SharpDX.ComObjects;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:
@@ -92,7 +93,7 @@ namespace Ch09_02DynamicCubeMapping
                 for (var i = 0; i < m.Textures.Length; i++)
                 {
                     if (System.IO.File.Exists(m.Textures[i]))
-                        textureViews.Add(ToDispose(ShaderResourceView.FromFile(device, m.Textures[i])));
+                        textureViews.Add(ToDispose(TextureLoader.FromFile(device, m.Textures[i])));
                     else
                         textureViews.Add(null);
                 }

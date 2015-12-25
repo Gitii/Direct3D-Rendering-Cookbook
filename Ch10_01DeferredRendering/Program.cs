@@ -35,7 +35,7 @@ namespace Ch10_01DeferredRendering
         {
 #if DEBUG
             // Enable object tracking
-            SharpDX.Configuration.EnableObjectTracking = true;
+            //SharpDX.Configuration.EnableObjectTracking = true;
 #endif
             // Create the form to render to
             var form = new Form1();

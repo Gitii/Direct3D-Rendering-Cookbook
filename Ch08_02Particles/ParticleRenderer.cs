@@ -9,6 +9,8 @@ using SharpDX.DXGI;
 using SharpDX.Direct3D11;
 using SharpDX.D3DCompiler;
 using Common;
+using SharpDX.ComObjects;
+using SharpDX.Mathematics.Interop;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:
@@ -312,9 +314,9 @@ namespace Ch08_02Particles
             // Create the particle frame buffer
             perFrame = ToDispose(new Buffer(device, Utilities.SizeOf<ParticleFrame>(), ResourceUsage.Default, BindFlags.ConstantBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0));
 
-            particleTextureSRVs.Add(ToDispose(ShaderResourceView.FromFile(device, "Particle.png")));
-            particleTextureSRVs.Add(ToDispose(ShaderResourceView.FromFile(device, "Snowflake.png")));
-            particleTextureSRVs.Add(ToDispose(ShaderResourceView.FromFile(device, "Square.png")));
+            particleTextureSRVs.Add(ToDispose(TextureLoader.FromFile(device, "Particle.png")));
+            particleTextureSRVs.Add(ToDispose(TextureLoader.FromFile(device, "Snowflake.png")));
+            particleTextureSRVs.Add(ToDispose(TextureLoader.FromFile(device, "Square.png")));
             activeParticleTextureIndex = 0;
 
             // Reinitialize particles if > 0
@@ -485,7 +487,7 @@ namespace Ch08_02Particles
             var context = this.DeviceManager.Direct3DContext;
 
             // Retrieve existing pipeline states for backup
-            Color4 oldBlendFactor;
+            RawColor4 oldBlendFactor;
             int oldSampleMask;
             int oldStencil;
             var oldPSBufs = context.PixelShader.GetConstantBuffers(0, 1);

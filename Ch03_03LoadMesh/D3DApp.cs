@@ -465,8 +465,8 @@ namespace Ch03_03LoadMesh
                     lastX = e.X;
 
                     // Mouse move changes 
-                    viewMatrix *= Matrix.RotationX(-xRotate * moveFactor);
-                    viewMatrix *= Matrix.RotationY(-yRotate * moveFactor);
+                    //viewMatrix *= Matrix.RotationX(-xRotate * moveFactor); // links rechts
+                    viewMatrix *= Matrix.RotationY(-yRotate * moveFactor); // hoch runter
 
                     updateText();
                 }

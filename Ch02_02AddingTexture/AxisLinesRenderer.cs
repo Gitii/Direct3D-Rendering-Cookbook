@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SharpDX;
+using SharpDX.ComObjects;
 using SharpDX.Direct3D11;
 
 // Resolve class name conflicts by explicitly stating
@@ -42,7 +43,7 @@ namespace Ch02_02AddingTexture
             var device = this.DeviceManager.Direct3DDevice;
 
             // Load texture
-            textureView = ToDispose(ShaderResourceView.FromFile(device, "Texture.png"));
+            textureView = ToDispose(TextureLoader.FromFile(device, "Texture.png"));
 
             // Create our sampler state
             samplerState = ToDispose(new SamplerState(device, new SamplerStateDescription()

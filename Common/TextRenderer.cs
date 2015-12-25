@@ -31,6 +31,7 @@ using System.Diagnostics;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
+using SharpDX.Mathematics.Interop;
 using Matrix = SharpDX.Matrix;
 using TextAntialiasMode = SharpDX.Direct2D1.TextAntialiasMode;
 
@@ -96,7 +97,7 @@ namespace Common
             var context2D = DeviceManager.Direct2DContext;
 
             context2D.BeginDraw();
-            context2D.Transform = Matrix.Identity;
+            context2D.Transform = new RawMatrix3x2() { M11 = 1.0f, M22 = 1.0f };
             context2D.DrawText(Text, textFormat, new RectangleF(Location.X, Location.Y, Location.X + lineLength, Location.Y + 16), sceneColorBrush);
             context2D.EndDraw();
         }

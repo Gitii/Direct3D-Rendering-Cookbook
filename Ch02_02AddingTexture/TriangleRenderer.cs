@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SharpDX;
+using SharpDX.ComObjects;
 using SharpDX.Direct3D11;
 
 // Resolve class name conflicts by explicitly stating
@@ -44,7 +45,7 @@ public class TriangleRenderer : Common.RendererBase
         var context = this.DeviceManager.Direct3DContext;
 
         // Load texture
-        textureView = ToDispose(ShaderResourceView.FromFile(device, "Texture2.png"));
+        textureView = ToDispose(TextureLoader.FromFile(device, "Texture2.png"));
 
         // Create our sampler state
         samplerState = ToDispose(new SamplerState(device, new SamplerStateDescription()

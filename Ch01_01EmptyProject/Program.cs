@@ -25,9 +25,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using SharpDX;
-using SharpDX.Windows;
 using SharpDX.DXGI;
 using SharpDX.Direct3D11;
+using SharpDX.Windows;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:

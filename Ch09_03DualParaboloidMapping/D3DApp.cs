@@ -31,6 +31,7 @@ using SharpDX.Direct3D11;
 using SharpDX.D3DCompiler;
 
 using Common;
+using SharpDX.Mathematics.Interop;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:
@@ -933,7 +934,7 @@ namespace Ch09_03DualParaboloidMapping
                     // and render a group of meshes on each.
                     Task[] renderTasks = new Task[contextList.Length];
                     CommandList[] commands = new CommandList[contextList.Length];
-                    var viewports = context.Rasterizer.GetViewports();
+                    var viewports = context.Rasterizer.GetViewports<RawViewportF>();
 
                     for (var i = 0; i < contextList.Length; i++)
                     {

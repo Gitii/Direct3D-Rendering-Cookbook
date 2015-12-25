@@ -31,6 +31,7 @@ using SharpDX.Direct3D11;
 using SharpDX.D3DCompiler;
 
 using Common;
+using SharpDX.Mathematics.Interop;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:
@@ -278,7 +279,7 @@ namespace Ch09_01Benchmark
 
             // Set viewport
             context.Rasterizer.SetViewports(this.DeviceManager
-                .Direct3DContext.Rasterizer.GetViewports());
+                .Direct3DContext.Rasterizer.GetViewports<RawViewportF>());
 
             // Back-face culling
             if (context.Rasterizer.State == null)

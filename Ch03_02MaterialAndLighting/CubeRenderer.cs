@@ -37,7 +37,7 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace Ch03_02MaterialAndLighting
 {
-    public class CubeRenderer : Common.RendererBase
+    public class CubeRenderer : RendererBase
     {
         // The vertex buffer
         Buffer vertexBuffer;

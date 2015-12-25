@@ -31,6 +31,7 @@ using SharpDX.Direct3D11;
 using SharpDX.D3DCompiler;
 
 using Common;
+using SharpDX.ComObjects;
 
 // Resolve class name conflicts by explicitly stating
 // which class they refer to:
@@ -96,7 +97,7 @@ namespace Ch06_01DisplacementMapping
             //}));
 
             // Load texture
-            textureView = ToDispose(ShaderResourceView.FromFile(device, "Texture2.png"));
+            textureView = ToDispose(TextureLoader.FromFile(device, "Texture2.png"));
 
             // Create our sampler state
             samplerState = ToDispose(new SamplerState(device, new SamplerStateDescription()

@@ -424,19 +424,21 @@ namespace Common
 
                 var sourceData = context.MapSubresource(dest, 0, MapMode.Read, MapFlags.None);
 
-                using (SharpDX.Toolkit.Graphics.Image image = SharpDX.Toolkit.Graphics.Image.New(new SharpDX.Toolkit.Graphics.ImageDescription()
-                {
-                    ArraySize = 1,
-                    Depth = 1,
-                    Dimension = SharpDX.Toolkit.Graphics.TextureDimension.Texture2D,
-                    Format = format ?? dest.Description.Format,
-                    Width = source.Description.Width,
-                    MipLevels = 1,
-                    Height = source.Description.Height
-                }, sourceData.DataPointer))
-                {
-                    image.Save(filename);
-                }
+                throw new NotImplementedException();
+
+                //using (SharpDX.Toolkit.Graphics.Image image = SharpDX.Toolkit.Graphics.Image.New(new SharpDX.Toolkit.Graphics.ImageDescription()
+                //{
+                //    ArraySize = 1,
+                //    Depth = 1,
+                //    Dimension = SharpDX.Toolkit.Graphics.TextureDimension.Texture2D,
+                //    Format = format ?? dest.Description.Format,
+                //    Width = source.Description.Width,
+                //    MipLevels = 1,
+                //    Height = source.Description.Height
+                //}, sourceData.DataPointer))
+                //{
+                //    image.Save(filename);
+                //}
             }
         }
 
